@@ -1,0 +1,23 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/.idea/workspace.xml
+/target
+/src/test/screenshot
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+*/.iml/*
+*/.iml/**
+*/src/test/screenshot/*
+*/src/test/screenshot/**
+*/screenshot
+*/screenshot/*
+*/screenshot/**
+*/target/*
+*/target
+*/target/**
+
