@@ -1,12 +1,14 @@
 package com.manager;
 
+import com.pages.createappointment.CreateAppointmentPage;
 import com.pages.login.LoginPage;
 import org.openqa.selenium.WebDriver;
 
 public class PageObjectManager {
 
-    private WebDriver driver;
+    private final WebDriver driver;
     private LoginPage loginPage;
+    private CreateAppointmentPage createappointmentpage;
     public PageObjectManager(WebDriver driver) {
         this.driver = driver;
     }
@@ -16,5 +18,7 @@ public class PageObjectManager {
         return (loginPage == null) ? loginPage = new LoginPage(driver) : loginPage;
     }
 
-
+    public CreateAppointmentPage getCreateAppointmentPage() {
+        return (createappointmentpage == null) ? createappointmentpage = new CreateAppointmentPage(driver) : createappointmentpage;
+    }
 }

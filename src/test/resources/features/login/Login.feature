@@ -7,7 +7,23 @@ Scenario: User Login To The Application With Valid Credentials
     And User Select Terms And Conditions
     And User Clicks On SignIn
     And User Select Hospital Location And Click On Go
+    And User Is In The Dashboard Page
     Then User Validates Valid Login
+
+Scenario Outline: User Login To The Application With Valid Credentials
+    Given User Is In The Login Page
+    When User Enters Multiple Usernames <email>
+    And User Enters Multiple Passwords <password>
+    And User Select Terms And Conditions
+    And User Clicks On SignIn
+    And User Select Hospital Location And Click On Go
+    Then User Validates Valid Login
+    Examples:
+        |email|password|
+        |test1|test1|
+        |test2|test2|
+        |test3|test3|
+
 
 #  Scenario: User Successfully Login & Logout From The Application
 #    Given User Is In The Login Page
@@ -20,9 +36,9 @@ Scenario: User Login To The Application With Valid Credentials
 #
 #  Scenario: User Login To The Application With Valid Username And Invalid Password
 #    Given User Is In The Login Page
-#    When User Enters InValid Username
-#    And User Enters InValid Password
-#    And User Clicks On Login Button
+#    When User Enters Invalid Username
+#    And User Enters Invalid Password
+#    And User Clicks On SignIn
 #    Then User Navigated To Dashboard Page
 #    Then User Validates Invalid Login Page
 #

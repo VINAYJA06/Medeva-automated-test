@@ -4,19 +4,22 @@ import com.factory.WebDriverFactory;
 import com.manager.FileReaderManager;
 import com.pages.login.LoginPage;
 import com.util.TestContext;
+import hooks.Hooks;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.logging.Logger;
 
 public class LoginSteps {
-    private LoginPage loginPage;
-//    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    Logger log = Logger.getLogger(LoginSteps.class.getName());
+    private final LoginPage loginPage;
+    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+//    Logger log = Logger.getLogger(LoginSteps.class.getName());
     TestContext testContext;
 
     public LoginSteps(TestContext context){
@@ -38,6 +41,16 @@ public class LoginSteps {
         loginPage.EnterValidPassword(FileReaderManager.getInstance().getConfigReader().getTestingPassword());
         log.info("Password is Entered");
     }
+    @When("User Enters Multiple Usernames (.+)$")
+    public void UserEntersMultipleUsernames(String email) throws InterruptedException, IOException {
+        loginPage.EnterValidUsername(email);
+        log.info("Username is Entered");
+    }
+    @And("User Enters Multiple Passwords (.+)$")
+    public void UserEntersMultiplePasswords(String password) throws InterruptedException, IOException {
+        loginPage.EnterValidPassword(password);
+        log.info("Password is Entered");
+    }
     @And("User Select Terms And Conditions")
     public void UserSelectTermsAndConditions() throws InterruptedException {
         loginPage.ClickTermsCodCheckBox();
@@ -53,8 +66,8 @@ public class LoginSteps {
         loginPage.SelectLocation();
         log.info("(Medeva Healthcare, Delhi, 5-9-92/A/1, Chapel Rd, N) - Hospital is Selected");
     }
-    @And("User Navigated To Dashboard Page")
-    public void UserNavigatedToDashboardPage(){
+    @And("User Is In The Dashboard Page")
+    public void UserIsInTheDashboardPage(){
         log.info("User in the Login Page");
     }
     @Then("User Validates Valid Login")
