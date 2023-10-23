@@ -65,15 +65,15 @@ public class LoginSteps {
     }
     @And("User Enters Invalid Password")
     public void UserEntersInvalidPassword() throws IOException, InterruptedException {
-        loginPage.EnterValidPassword(FileReaderManager.getInstance().getConfigReader().getInvalidTestingingPassword());
+        loginPage.EnterValidPassword(FileReaderManager.getInstance().getConfigReader().getInvalidTestingPassword());
         log.info("Wrong Password is Entered");
     }
     @And("User Enters Empty Username")
-    public void UserEntersEmptyUsername() throws IOException, InterruptedException {
+    public void UserEntersEmptyUsername() {
         log.info("Username is not Entered");
     }
     @And("User Enters Empty Password")
-    public void UserEntersEmptyPassword() throws IOException, InterruptedException {
+    public void UserEntersEmptyPassword() {
         log.info("Password is not Entered");
     }
     @Then("User Validates Valid Login")
@@ -87,7 +87,7 @@ public class LoginSteps {
         log.info(loginPage.ValidateLoginUsername());
     }
     @Then("User Validates Empty Password")
-    public void UserValidatesEmptyPPPassword() {
+    public void UserValidatesEmptyPassword() {
         Assert.assertEquals(loginPage.ExpectedLoginPassword(), loginPage.ValidateLoginPassword());
         log.info("Password is Empty");
         log.info(loginPage.ValidateLoginPassword());
@@ -109,7 +109,7 @@ public class LoginSteps {
         log.info("clicks on Logout");
     }
     @Then("User Should Redirect Back To The Login Page And Validates Login Page")
-    public void UserShouldRedirectBackToTheLoginPage() throws InterruptedException {
+    public void UserShouldRedirectBackToTheLoginPage() {
         Assert.assertEquals(loginPage.ExpectedLoginMsg(), loginPage.ValidateLoginPage());
         log.info("User Redirected back to the SignIN Page ");
         log.info("Expected : "+loginPage.ExpectedLoginMsg());
