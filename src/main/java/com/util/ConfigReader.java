@@ -56,7 +56,7 @@ public class ConfigReader {
             throw new RuntimeException("Testing Server Password not specified in the config.properties file");
         }
     }
-    public String getInvalidTestingingPassword() {
+    public String getInvalidTestingPassword() {
         String invalidTestingPassword = properties.getProperty("invalid_testing_password");
         if (invalidTestingPassword != null) {
             return invalidTestingPassword;
