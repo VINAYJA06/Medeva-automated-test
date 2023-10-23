@@ -4,8 +4,6 @@ import com.factory.WebDriverFactory;
 import com.manager.FileReaderManager;
 import com.pages.login.LoginPage;
 import com.util.TestContext;
-import hooks.Hooks;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,7 +17,7 @@ import java.lang.invoke.MethodHandles;
 public class LoginSteps {
     private final LoginPage loginPage;
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-//    Logger log = Logger.getLogger(LoginSteps.class.getName());
+    //    Logger log = Logger.getLogger(LoginSteps.class.getName());
     TestContext testContext;
 
     public LoginSteps(TestContext context){
@@ -33,23 +31,13 @@ public class LoginSteps {
     }
     @When("User Enters Valid Username")
     public void UserEntersValidUsername() throws InterruptedException, IOException {
-        loginPage.EnterValidUsername(FileReaderManager.getInstance().getConfigReader().getTestingUsername());
-        log.info("Username is Entered");
+        loginPage.EnterValidUsername(FileReaderManager.getInstance().getConfigReader().getValidTestingUsername());
+        log.info("Valid Username is Entered");
     }
     @And("User Enters Valid Password")
     public void UserEntersValidPassword() throws InterruptedException, IOException {
-        loginPage.EnterValidPassword(FileReaderManager.getInstance().getConfigReader().getTestingPassword());
-        log.info("Password is Entered");
-    }
-    @When("User Enters Multiple Usernames (.+)$")
-    public void UserEntersMultipleUsernames(String email) throws InterruptedException, IOException {
-        loginPage.EnterValidUsername(email);
-        log.info("Username is Entered");
-    }
-    @And("User Enters Multiple Passwords (.+)$")
-    public void UserEntersMultiplePasswords(String password) throws InterruptedException, IOException {
-        loginPage.EnterValidPassword(password);
-        log.info("Password is Entered");
+        loginPage.EnterValidPassword(FileReaderManager.getInstance().getConfigReader().getValidTestingPassword());
+        log.info("Valid Password is Entered");
     }
     @And("User Select Terms And Conditions")
     public void UserSelectTermsAndConditions() throws InterruptedException {
@@ -59,7 +47,7 @@ public class LoginSteps {
     @And("User Clicks On SignIn")
     public void UserClicksOnSignIn() throws InterruptedException {
         loginPage.ClickLoginButton();
-        log.info("Clicked SignIn Button");
+        log.info("SignIn Button is Clicked");
     }
     @And("User Select Hospital Location And Click On Go")
     public void UserSelectHospitalLocationAndClickOnGo() throws InterruptedException {
@@ -68,54 +56,64 @@ public class LoginSteps {
     }
     @And("User Is In The Dashboard Page")
     public void UserIsInTheDashboardPage(){
-        log.info("User in the Login Page");
+        log.info("User entered into the Dashboard Page");
+    }
+    @And("User Enters InValid Username")
+    public void UserEntersInValidUsername() throws IOException, InterruptedException {
+        loginPage.EnterValidUsername(FileReaderManager.getInstance().getConfigReader().getInvalidTestingUsername());
+        log.info("Wrong Username is Entered");
+    }
+    @And("User Enters Invalid Password")
+    public void UserEntersInvalidPassword() throws IOException, InterruptedException {
+        loginPage.EnterValidPassword(FileReaderManager.getInstance().getConfigReader().getInvalidTestingingPassword());
+        log.info("Wrong Password is Entered");
+    }
+    @And("User Enters Empty Username")
+    public void UserEntersEmptyUsername() throws IOException, InterruptedException {
+        log.info("Username is not Entered");
+    }
+    @And("User Enters Empty Password")
+    public void UserEntersEmptyPassword() throws IOException, InterruptedException {
+        log.info("Password is not Entered");
     }
     @Then("User Validates Valid Login")
     public void UserValidatesValidLogin() {
         Assert.assertEquals(loginPage.ExpectedDashboardText(), loginPage.ActualDashboardText());
-        log.info("User Login Validation is Successful");
-    }
-    @When("User Validates Empty Username And Password")
-    public void UserValidatesEmptyUsernameAndPassword() {
-        Assert.assertEquals(loginPage.ExpectedLoginUsername(), loginPage.ValidateLoginUsername());
-        Assert.assertEquals(loginPage.ExpectedLoginPassword(), loginPage.ValidateLoginPassword());
-        System.out.println(" ");
-        System.out.println(loginPage.ValidateLoginUsername());
-        System.out.println(loginPage.ValidateLoginPassword());
+        log.info("User Login Validation is Successful and reads dashboard data of : "+loginPage.ActualDashboardText());
     }
     @Then("User Validates Empty Username")
-    public void UserValidatesEmptyPPUsername() {
+    public void UserValidatesEmptyUsername() {
         Assert.assertEquals(loginPage.ExpectedLoginUsername(), loginPage.ValidateLoginUsername());
-        System.out.println(" ");
-        System.out.println("Username is Empty");
-        System.out.println(loginPage.ValidateLoginUsername());
+        log.info(loginPage.ValidateLoginUsername());
     }
     @Then("User Validates Empty Password")
     public void UserValidatesEmptyPPPassword() {
         Assert.assertEquals(loginPage.ExpectedLoginPassword(), loginPage.ValidateLoginPassword());
-        System.out.println(" ");
-        System.out.println("Password is Empty");
-        System.out.println(loginPage.ValidateLoginPassword());
+        log.info("Password is Empty");
+        log.info(loginPage.ValidateLoginPassword());
     }
+    @Then("User Validates Invalid Login Page")
+    public void UserValidatesInvalidLoginPage() {
+        Assert.assertEquals(loginPage.ExpectedInvalidMsg(), loginPage.InvalidLoginMsg());
+        log.info("Login is not Successful");
+        log.info("Actual Message : "+ loginPage.InvalidLoginMsg());
+        log.info("Expected Message : "+loginPage.ExpectedInvalidMsg());
+    }
+
     //Logout
     @When("User Clicks On User Dropdown And Logout From Application Successfully")
     public void UserClicksOnUserDropdownAndLogoutFromApplicationSuccessfully() throws InterruptedException {
         loginPage.ClickUserDropdown();
+        log.info("clicks on user dropdown");
         loginPage.ClickLogoutButton();
+        log.info("clicks on Logout");
     }
     @Then("User Should Redirect Back To The Login Page And Validates Login Page")
-        public void UserShouldRedirectBackToTheLoginPage() throws InterruptedException {
+    public void UserShouldRedirectBackToTheLoginPage() throws InterruptedException {
         Assert.assertEquals(loginPage.ExpectedLoginMsg(), loginPage.ValidateLoginPage());
-        System.out.println(" ");
-        System.out.println("User Redirected back to the SignIN Page ");
-        System.out.println(" ");
-    }
-    @Then("User Validates Invalid Login Page")
-        public void UserValidatesInvalidLoginPage() {
-        Assert.assertEquals(loginPage.ExpectedInvalidMsg(), loginPage.InvalidLoginMsg());
-        System.out.println(" ");
-        System.out.println("Login is not Successful");
-        System.out.println("Message: "+ loginPage.InvalidLoginMsg());
+        log.info("User Redirected back to the SignIN Page ");
+        log.info("Expected : "+loginPage.ExpectedLoginMsg());
+        log.info("Actual : "+loginPage.ValidateLoginPage());
     }
 
 

@@ -11,16 +11,19 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.8</java.version>
-    <junit.version>5.8.2</junit.version>
-    <cucumber.version>7.3.3</cucumber.version>
-    <maven.compiler.version>3.8.1</maven.compiler.version>
-    <maven.surefire.version>2.22.2</maven.surefire.version>
-    <selenium.version>4.11.0</selenium.version>
-    <cucumber.pico.container>7.4.1</cucumber.pico.container>
-    <aventstack.extent.reports>5.0.9</aventstack.extent.reports>
-    <grasshopper.extent.reports>1.7.0</grasshopper.extent.reports>
-    <apache.poi>5.2.1</apache.poi>
+    <java.version>11.0.20</java.version>
+    <junit.version>5.10.0</junit.version>
+    <cucumber.version>7.14.0</cucumber.version>
+    <maven.compiler.version>3.11.0</maven.compiler.version>
+    <maven.surefire.version>3.1.2</maven.surefire.version>
+    <selenium.version>4.14.1</selenium.version>
+    <cucumber.pico.container>7.14.0</cucumber.pico.container>
+    <aventstack.extent.reports>5.1.1</aventstack.extent.reports>
+    <grasshopper.extent.reports>1.14.0</grasshopper.extent.reports>
+    <commons-lang.version>3.13.0</commons-lang.version>
+    <slf4j.version>2.0.9</slf4j.version>
+    <slf4j.version>2.0.9</slf4j.version>
+    <apache.poi>5.2.4</apache.poi>
   </properties>
 
 
@@ -43,12 +46,14 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.junit.vintage</groupId>
       <artifactId>junit-vintage-engine</artifactId>
       <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -65,15 +70,16 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.13.0</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
       <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang.version}</version>
     </dependency>
 
     <dependency>
@@ -97,13 +103,13 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>2.0.8</version>
+      <version>${slf4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>2.0.8</version>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
 

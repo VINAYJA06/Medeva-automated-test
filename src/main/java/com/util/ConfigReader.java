@@ -32,34 +32,34 @@ public class ConfigReader {
             throw new RuntimeException("Testing Server Url not specified in the config.properties file");
         }
     }
-    public String getTestingUsername() {
-        String testingUsername = properties.getProperty("testing_username");
-        if (testingUsername != null) {
-            return testingUsername;
+    public String getValidTestingUsername() {
+        String validTestingUsername = properties.getProperty("valid_testing_username");
+        if (validTestingUsername != null) {
+            return validTestingUsername;
         } else {
             throw new RuntimeException("Testing Server Username not specified in the config.properties file");
         }
     }
-    public String getInvalidPPStagingUsername() {
-        String invalidPPStagingUsername = properties.getProperty("invalid_pp_staging_username");
-        if (invalidPPStagingUsername != null) {
-            return invalidPPStagingUsername;
+    public String getInvalidTestingUsername() {
+        String invalidTestingUsername = properties.getProperty("invalid_testing_username");
+        if (invalidTestingUsername != null) {
+            return invalidTestingUsername;
         } else {
             throw new RuntimeException("Invalid Testing Server Username not specified in the config.properties file");
         }
     }
-    public String getTestingPassword() {
-        String testingPassword = properties.getProperty("testing_password");
-        if (testingPassword != null) {
-            return testingPassword;
+    public String getValidTestingPassword() {
+        String validTestingPassword = properties.getProperty("valid_testing_password");
+        if (validTestingPassword != null) {
+            return validTestingPassword;
         } else {
             throw new RuntimeException("Testing Server Password not specified in the config.properties file");
         }
     }
-    public String getInvalidPPStagingPassword() {
-        String invalidPPStagingPassword = properties.getProperty("invalid_pp_staging_password");
-        if (invalidPPStagingPassword != null) {
-            return invalidPPStagingPassword;
+    public String getInvalidTestingingPassword() {
+        String invalidTestingPassword = properties.getProperty("invalid_testing_password");
+        if (invalidTestingPassword != null) {
+            return invalidTestingPassword;
         } else {
             throw new RuntimeException("Invalid Testing Server Password not specified in the config.properties file");
         }

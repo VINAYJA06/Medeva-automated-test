@@ -18,12 +18,7 @@ public class Hooks {
         webDriverFactory = new WebDriverFactory();
         webDriverFactory.init_driver(FileReaderManager.getInstance().getConfigReader().getBrowser());
     }
-//    @After(order = 1)
-//    public static void addScreenshot(Scenario scenario) {
-//        final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-//        scenario.attach(screenshot,"image/png", "image");
-//    }
-    @After(order = 0)
+    @After()
     public void quitBrowser(){
         WebDriverFactory.getDriver().quit();
     }
