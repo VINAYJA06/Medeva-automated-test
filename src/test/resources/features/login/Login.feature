@@ -43,8 +43,7 @@ Scenario: User Login To The Application With Valid Credentials
     And User Enters Empty Password
     And User Select Terms And Conditions
     And User Clicks On SignIn
-    Then User Validates Empty Username
-    Then User Validates Empty Password
+    Then User Validates Empty Username And Password
 
   Scenario: User Login To The Application With Valid Username And Empty Password
     Given User Is In The Login Page

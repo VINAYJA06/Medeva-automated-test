@@ -22,7 +22,7 @@ public class CreateAppointmentPage {
     WebElement clickAddOrViewPatients;
     @FindBy(xpath = "//input[@name='name']")
     WebElement patientNameField;
-    @FindBy(xpath = "(//div[@role='row'])[4]") //based on row count should change the number
+    @FindBy(xpath = "(//div[@role='row'])[3]") //based on row count should change the number, first row==3
     WebElement clickPatient;
     @FindBy(xpath = "//input[@name='visitId']")
     WebElement enterVisitID;
