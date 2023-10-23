@@ -26,15 +26,11 @@ public class LoginPage {
     @FindBy(xpath = "//button[normalize-space()='Go']")
     WebElement clickGo;
     @FindBy(xpath = "//a[normalize-space()='Add/View Patients']")
-    WebElement actualDashboardText;
+    WebElement validateDashboardText;
     @FindBy(xpath = "//h1[contains(normalize-space(),'Sign in to your account')]")
     WebElement validateLoginPage;
     @FindBy(xpath = "//span[contains(.,'Invalid username or password.')]")
-    WebElement validateUserName;
-    @FindBy(xpath = "//span[contains(.,'Invalid username or password.')]")
-    WebElement validatePassword;
-    @FindBy(xpath = "//span[contains(.,'Invalid username or password.')]")
-    WebElement invalidLoginMsg;
+    WebElement invalidLoginPage;
     //    Logout attributes
     @FindBy(xpath = "//mat-icon[normalize-space()='arrow_drop_down']")
     WebElement logoutUserDropdown;
@@ -84,55 +80,20 @@ public class LoginPage {
         logoutButton.click();
         Thread.sleep(3000);
     }
-    public String ActualDashboardText() {
-        wait.until(ExpectedConditions.visibilityOf(actualDashboardText));
-        String actualPageText = actualDashboardText.getText();
+    public String ValidateDashboardText() {
+        wait.until(ExpectedConditions.visibilityOf(validateDashboardText));
+        String actualPageText = validateDashboardText.getText();
         return actualPageText;
     }
     public String ValidateLoginPage() {
         wait.until(ExpectedConditions.visibilityOf(validateLoginPage));
-        String validateSignIn = validateLoginPage.getText();
-        return validateSignIn;
-    }
-    public String ValidateLoginUsername() {
-        wait.until(ExpectedConditions.visibilityOf(validateUserName));
-        String validateSignInUsername = validateUserName.getText();
+        String validateSignInUsername = validateLoginPage.getText();
         return validateSignInUsername;
     }
-    public String ValidateLoginPassword() {
-        wait.until(ExpectedConditions.visibilityOf(validatePassword));
-        String validateSignInPassword = validatePassword.getText();
-        return validateSignInPassword;
-    }
     public String InvalidLoginMsg() {
-        wait.until(ExpectedConditions.visibilityOf(invalidLoginMsg));
-        String inValidateSignIn = invalidLoginMsg.getText();
+        wait.until(ExpectedConditions.visibilityOf(invalidLoginPage));
+        String inValidateSignIn = invalidLoginPage.getText();
         return inValidateSignIn;
-    }
-    public String ExpectedDashboardText() {
-        String expectedPageText;
-        expectedPageText = "ADD/VIEW PATIENTS";
-        return expectedPageText;
-    }
-    public String ExpectedInvalidMsg() {
-        String expectedInvalidMsg;
-        expectedInvalidMsg = "Invalid username or password.";
-        return expectedInvalidMsg;
-    }
-    public String ExpectedLoginMsg() {
-        String expectedLoginText;
-        expectedLoginText = "Sign in to your account";
-        return expectedLoginText;
-    }
-    public String ExpectedLoginUsername() {
-        String expectedSignInUsername;
-        expectedSignInUsername = "Invalid username or password.";
-        return expectedSignInUsername;
-    }
-    public String ExpectedLoginPassword() {
-        String expectedSignInPassword;
-        expectedSignInPassword = "Invalid username or password.";
-        return expectedSignInPassword;
     }
 
 

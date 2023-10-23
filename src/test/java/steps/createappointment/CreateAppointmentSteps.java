@@ -1,23 +1,16 @@
 package steps.createappointment;
 
+import com.helper.Helper;
 import com.pages.createappointment.CreateAppointmentPage;
 import com.util.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 
 public class CreateAppointmentSteps {
 
-    private CreateAppointmentPage createappointmentpage;
-    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private final CreateAppointmentPage createappointmentpage;
     TestContext testContext;
 
     public CreateAppointmentSteps(TestContext context){
@@ -27,19 +20,24 @@ public class CreateAppointmentSteps {
     @Given("User Clicks On Add Or View Patients Button")
     public void UserClicksOnAddOrViewPatientsButton() throws InterruptedException {
         createappointmentpage.ClickAddOrViewPatients();
+        Helper.Logger("Add/View Patients button is clicked");
     }
     @And("User Search For The Patient By Name And Clicks On Patient (.+)$")
     public void UserSearchForThePatientByNameAndClicksOnPatient(String patientName) throws InterruptedException {
         createappointmentpage.SelectPatient(patientName);
+        Helper.Logger("Patient name is Searched");
+        Helper.Logger("Patient name is clicked");
     }
     @And("User Enters Visit ID (.+)$")
     public void UserEntersVisitID(String visitID) throws InterruptedException {
         visitID = RandomStringUtils.randomAlphabetic(5);
         createappointmentpage.EnterVisitID(visitID);
+        Helper.Logger("Visit ID is Entered");
     }
     @Then("User Creates An Appointment")
     public void UserCreatesAnAppointment() throws InterruptedException {
         createappointmentpage.CreateAppointment();
+        Helper.Logger("Appointment is created");
 
     }
     @Then("User Validates The Created Appointment")

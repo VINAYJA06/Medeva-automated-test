@@ -1,15 +1,19 @@
 package com.helper;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
+import java.lang.invoke.MethodHandles;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -106,9 +110,8 @@ public class Helper {
         //Dragged and dropped.
         act.dragAndDrop(from, to).build().perform();
     }
-    public String getLocalTime() {
+    public static String getLocalTime() {
         Calendar calder = Calendar.getInstance();
-
         return calder.getTime().toString();
     }
 
@@ -116,10 +119,10 @@ public class Helper {
         return input == null ? "" : input;
     }
 
-    public void assertSingleFieldVal(String expected, String actual) {
+    public static void assertSingleFieldVal(String expected, String actual) {
         try {
-            if ("".equals(actual)) {
-                System.out.println("\nExpected:\t" + expected + "\nActual:\t\t" + "Empty Field");
+            if (expected.equals(actual)) {
+                System.out.println("\nExpected:\t" + expected + "\nActual:\t\t" + actual);
             } else {
                 System.out.println("\nExpected:\t" + expected + "\nActual:\t\t" + actual);
             }
@@ -131,7 +134,7 @@ public class Helper {
         }
     }
 
-    public void assertSingleFieldVal(boolean expected, boolean actual) {
+    public static void assertSingleFieldValidation(boolean expected, boolean actual) {
         try {
             System.out.println("\nExpected:\t" + expected + "\nActual:\t\t" + actual);
             Assert.assertEquals(expected, actual);
@@ -395,4 +398,11 @@ public class Helper {
         }
         return choice;
     }
+    public static void Logger(String logger) {
+//        private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+//        Logger log = Logger.getLogger(LoginSteps.class.getName());
+        Logger log =  LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+      log.info(logger);
+    }
+
 }
