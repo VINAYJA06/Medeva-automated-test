@@ -1,6 +1,6 @@
 package com.manager;
 
-import com.pages.createappointment.CreateAppointmentPage;
+import com.pages.appointment.CreateAppointmentPage;
 import com.pages.login.LoginPage;
 import org.openqa.selenium.WebDriver;
 

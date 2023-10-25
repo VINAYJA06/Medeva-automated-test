@@ -1,22 +1,17 @@
-package com.pages.createappointment;
+package com.pages.appointment;
 
-import com.util.TestContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 
 public class CreateAppointmentPage {
 
     WebDriver driver;
     WebDriverWait wait;
-    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @FindBy(xpath = "//a[normalize-space()='Add/View Patients']")
     WebElement clickAddOrViewPatients;

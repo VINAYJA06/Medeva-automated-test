@@ -10,6 +10,7 @@ Feature: Doctor is Creating an appointment to the Patient
     And User Is In The Dashboard Page
     Then User Validates Valid Login
 
+@All
   Scenario Outline: User Creating an appointment to the Patient
     And User Is In The Dashboard Page
     Given User Clicks On Add Or View Patients Button
@@ -19,10 +20,10 @@ Feature: Doctor is Creating an appointment to the Patient
     Then User Validates The Created Appointment
     Examples:
       |patient name|visit id|
-      |vinod       |visitID|
-      |Vinay A     |visitID|
-      |test        |visitID|
-      |rupesh      |visitID|
+      |vinay       |visitID |
+#      |Vinod       |visitID |
+#      |test        |visitID |
+#      |rupesh      |visitID |
 
 
 

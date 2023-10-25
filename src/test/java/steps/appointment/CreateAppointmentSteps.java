@@ -1,7 +1,7 @@
-package steps.createappointment;
+package steps.appointment;
 
 import com.helper.Helper;
-import com.pages.createappointment.CreateAppointmentPage;
+import com.pages.appointment.CreateAppointmentPage;
 import com.util.TestContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -32,7 +32,7 @@ public class CreateAppointmentSteps {
     public void UserEntersVisitID(String visitID) throws InterruptedException {
         visitID = RandomStringUtils.randomAlphabetic(5);
         createappointmentpage.EnterVisitID(visitID);
-        Helper.Logger("Visit ID is Entered");
+        Helper.Logger("Visit ID is Entered : "+visitID);
     }
     @Then("User Creates An Appointment")
     public void UserCreatesAnAppointment() throws InterruptedException {
