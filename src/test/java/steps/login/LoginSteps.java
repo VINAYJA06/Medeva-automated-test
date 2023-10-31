@@ -9,11 +9,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebDriver;
+
 import java.io.IOException;
 
 public class LoginSteps {
     private final LoginPage loginPage;
     TestContext testContext;
+    WebDriver driver;
 
     public LoginSteps(TestContext context){
         testContext = context;
@@ -35,7 +38,7 @@ public class LoginSteps {
         Helper.Logger("Valid Password is Entered");
     }
     @And("User Select Terms And Conditions")
-    public void UserSelectTermsAndConditions() throws InterruptedException {
+    public void UserSelectTermsAndConditions() throws InterruptedException, IOException {
         loginPage.ClickTermsCodCheckBox();
         Helper.Logger("Terms and Conditions is Checked");
     }
@@ -72,24 +75,24 @@ public class LoginSteps {
         Helper.Logger("Password is not Entered");
     }
     @Then("User Validates Valid Login")
-    public void UserValidatesValidLogin() {
-        Helper.assertSingleFieldVal("ADD/VIEW PATIENTS", loginPage.ValidateDashboardText());
+    public void UserValidatesValidLogin() throws IOException {
+        Helper.assertSingleFieldVal("ADD/VIEW PATIENTS", loginPage.validateDashboardText.getText());
     }
     @Then("User Validates Empty Username")
     public void UserValidatesEmptyUsername() {
-        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.InvalidLoginMsg());
+        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.invalidLoginPage.getText());
     }
     @Then("User Validates Empty Password")
     public void UserValidatesEmptyPassword() {
-        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.InvalidLoginMsg());
+        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.invalidLoginPage.getText());
     }
     @Then("User Validates Empty Username And Password")
     public void UserValidatesEmptyUsernameAndPassword() {
-        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.InvalidLoginMsg());
+        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.invalidLoginPage.getText());
     }
     @Then("User Validates Invalid Login Page")
     public void UserValidatesInvalidLoginPage() {
-        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.InvalidLoginMsg());
+        Helper.assertSingleFieldVal("Invalid username or password.",loginPage.invalidLoginPage.getText());
         Helper.Logger("Login is not Successful");
     }
 
@@ -103,7 +106,7 @@ public class LoginSteps {
     }
     @Then("User Should Redirect Back To The Login Page And Validates Login Page")
     public void UserShouldRedirectBackToTheLoginPage() {
-        Helper.assertSingleFieldVal("Sign in to your account",loginPage.ValidateLoginPage());
+        Helper.assertSingleFieldVal("Sign in to your account",loginPage.validateLoginPage.getText());
         Helper.Logger("User Redirected back to the SignIN Page ");
     }
 

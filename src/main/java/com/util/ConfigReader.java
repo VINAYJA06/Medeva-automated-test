@@ -65,6 +65,15 @@ public class ConfigReader {
         }
     }
 
+    public String getReportConfigPath(){
+        String reportConfigPath = properties.getProperty("report_config_path");
+        if(reportConfigPath!= null) {
+            return reportConfigPath;
+        }else {
+            throw new RuntimeException("Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");
+        }
+    }
+
 
 
 }

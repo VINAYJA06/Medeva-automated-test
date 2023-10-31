@@ -1,6 +1,6 @@
 Feature: Login & Logout Page Testing
 
-Scenario: User Login To The Application With Valid Credentials
+  Scenario: User Login To The Application With Valid Credentials
     Given User Is In The Login Page
     When User Enters Valid Username
     And User Enters Valid Password
@@ -10,6 +10,7 @@ Scenario: User Login To The Application With Valid Credentials
     And User Is In The Dashboard Page
     Then User Validates Valid Login
 
+  @All
   Scenario: User Successfully Login & Logout From The Application
     Given User Is In The Login Page
     When User Enters Valid Username
@@ -28,7 +29,7 @@ Scenario: User Login To The Application With Valid Credentials
     And User Select Terms And Conditions
     And User Clicks On SignIn
     Then User Validates Invalid Login Page
-
+@All
   Scenario: User Login To The Application With Invalid Username And Valid Password
     Given User Is In The Login Page
     When User Enters InValid Username
@@ -44,7 +45,7 @@ Scenario: User Login To The Application With Valid Credentials
     And User Select Terms And Conditions
     And User Clicks On SignIn
     Then User Validates Empty Username And Password
-
+  @All
   Scenario: User Login To The Application With Valid Username And Empty Password
     Given User Is In The Login Page
     When User Enters Valid Username
@@ -52,7 +53,7 @@ Scenario: User Login To The Application With Valid Credentials
     And User Select Terms And Conditions
     And User Clicks On SignIn
     Then User Validates Empty Password
-
+  @All
   Scenario: User Login To The Application With Empty Username And Valid Password
     Given User Is In The Login Page
     When User Enters Empty Username

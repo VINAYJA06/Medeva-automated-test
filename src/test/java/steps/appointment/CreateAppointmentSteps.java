@@ -8,6 +8,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.io.IOException;
+
 public class CreateAppointmentSteps {
 
     private final CreateAppointmentPage createappointmentpage;
@@ -18,7 +20,7 @@ public class CreateAppointmentSteps {
         createappointmentpage = testContext.getPageObjectManager().getCreateAppointmentPage();
     }
     @Given("User Clicks On Add Or View Patients Button")
-    public void UserClicksOnAddOrViewPatientsButton() throws InterruptedException {
+    public void UserClicksOnAddOrViewPatientsButton() throws InterruptedException, IOException {
         createappointmentpage.ClickAddOrViewPatients();
         Helper.Logger("Add/View Patients button is clicked");
     }

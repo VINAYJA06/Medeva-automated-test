@@ -1,5 +1,6 @@
 package com.pages.login;
 
+import com.helper.Helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class LoginPage {
@@ -26,11 +28,11 @@ public class LoginPage {
     @FindBy(xpath = "//button[normalize-space()='Go']")
     WebElement clickGo;
     @FindBy(xpath = "//a[normalize-space()='Add/View Patients']")
-    WebElement validateDashboardText;
+    public WebElement validateDashboardText;
     @FindBy(xpath = "//h1[contains(normalize-space(),'Sign in to your account')]")
-    WebElement validateLoginPage;
+    public WebElement validateLoginPage;
     @FindBy(xpath = "//span[contains(.,'Invalid username or password.')]")
-    WebElement invalidLoginPage;
+    public WebElement invalidLoginPage;
     //    Logout attributes
     @FindBy(xpath = "//mat-icon[normalize-space()='arrow_drop_down']")
     WebElement logoutUserDropdown;
@@ -53,47 +55,33 @@ public class LoginPage {
         Thread.sleep(3000);
 
     }
-    public void ClickTermsCodCheckBox() throws InterruptedException {
+    public void ClickTermsCodCheckBox() throws InterruptedException, IOException {
         wait.until(ExpectedConditions.visibilityOf(checkTermsCon));
-        checkTermsCon.click();
+        Helper.clickOnElement(checkTermsCon);
+        Helper.captureScreenshot(driver);
         Thread.sleep(3000);
     }
     public void ClickLoginButton() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(clickSignIn));
-        clickSignIn.click();
+        Helper.clickOnElement(clickSignIn);
         Thread.sleep(3000);
     }
     public void SelectLocation() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(selectLocation));
-        selectLocation.click();
+        Helper.clickOnElement(selectLocation);
         Thread.sleep(3000);
-        clickGo.click();
+        Helper.clickOnElement(clickGo);
         Thread.sleep(5000);
     }
     public void ClickUserDropdown() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(logoutUserDropdown));
-        logoutUserDropdown.click();
+        Helper.clickOnElement(logoutUserDropdown);
         Thread.sleep(3000);
     }
     public void ClickLogoutButton() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(logoutButton));
-        logoutButton.click();
+        Helper.clickOnElement(logoutButton);
         Thread.sleep(3000);
-    }
-    public String ValidateDashboardText() {
-        wait.until(ExpectedConditions.visibilityOf(validateDashboardText));
-        String actualPageText = validateDashboardText.getText();
-        return actualPageText;
-    }
-    public String ValidateLoginPage() {
-        wait.until(ExpectedConditions.visibilityOf(validateLoginPage));
-        String validateSignInUsername = validateLoginPage.getText();
-        return validateSignInUsername;
-    }
-    public String InvalidLoginMsg() {
-        wait.until(ExpectedConditions.visibilityOf(invalidLoginPage));
-        String inValidateSignIn = invalidLoginPage.getText();
-        return inValidateSignIn;
     }
 
 

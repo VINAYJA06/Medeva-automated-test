@@ -14,6 +14,5 @@ import org.junit.runner.RunWith;
         monochrome= true,
         plugin= {"pretty" , "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
 )
-
 public class CreateAppointmentRunner {
 }

@@ -20,10 +20,11 @@ Feature: Doctor is Creating an appointment to the Patient
     Then User Validates The Created Appointment
     Examples:
       |patient name|visit id|
-      |vinay       |visitID |
+#      |vinay       |visitID |
 #      |Vinod       |visitID |
 #      |test        |visitID |
-#      |rupesh      |visitID |
+      |rupesh      |visitID |
+#      |vikky       |visitID |
 
 
 

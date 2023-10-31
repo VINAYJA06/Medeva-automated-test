@@ -1,11 +1,13 @@
 package com.pages.appointment;
 
+import com.helper.Helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.IOException;
 import java.time.Duration;
 
 public class CreateAppointmentPage {
@@ -32,30 +34,32 @@ public class CreateAppointmentPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void ClickAddOrViewPatients() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(clickAddOrViewPatients));
-        clickAddOrViewPatients.click();
+    public void ClickAddOrViewPatients() throws InterruptedException, IOException {
+        Helper.isElementPresent(wait, clickAddOrViewPatients);
+        Helper.clickOnElement(clickAddOrViewPatients);
+        Helper.captureScreenshot(driver);
         Thread.sleep(3000);
     }
     public void SelectPatient(String patientName) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(patientNameField));
-        patientNameField.click();
+        Helper.isElementPresent(wait, patientNameField);
+        Helper.clickOnElement(patientNameField);
+
         Thread.sleep(3000);
         patientNameField.sendKeys(patientName);
         Thread.sleep(3000);
-        clickPatient.click();
+        Helper.clickOnElement(clickPatient);
         Thread.sleep(3000);
     }
     public void EnterVisitID(String visitID) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(enterVisitID));
+        Helper.isElementPresent(wait, enterVisitID);
         enterVisitID.sendKeys(visitID);
         Thread.sleep(3000);
-        selectConsultType.click();
+        Helper.clickOnElement(selectConsultType);
         Thread.sleep(3000);
     }
     public void CreateAppointment() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(clickConfirm));
-        clickConfirm.click();
+        Helper.isElementPresent(wait, clickConfirm);
+        Helper.clickOnElement(clickConfirm);
         Thread.sleep(3000);
     }
 }

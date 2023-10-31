@@ -1,6 +1,6 @@
 package com.helper;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -85,9 +86,8 @@ public class Helper {
     public Helper() {
     }
 
-    public void clickOnElement(WebElement webElement) {
+    public static void clickOnElement(WebElement webElement) {
         try {
-            System.out.println("\nTry click on button " + webElement.getAttribute("id"));
             webElement.click();
         } catch (ElementClickInterceptedException ecie) {
             try {
@@ -112,7 +112,9 @@ public class Helper {
     }
     public static String getLocalTime() {
         Calendar calder = Calendar.getInstance();
+        System.out.println(calder.getTime());
         return calder.getTime().toString();
+
     }
 
     public String replaceNull(String input) {
@@ -186,27 +188,42 @@ public class Helper {
         }
     }
 
-    public boolean isElementPresent(WebDriverWait waits, WebElement element) {
+    public static void isElementPresent(WebDriverWait waits, WebElement element) {
         try {
             waits.until(ExpectedConditions.visibilityOf(element));
             System.out.println(element.getText());
-        } catch (NoSuchElementException | TimeoutException error) {
-            return false;
+        } catch (NoSuchElementException | TimeoutException ignored) {
+            System.out.println("Element not found");
+            Assert.fail();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return true;
     }
 
     /**
      * pass a list of column data. row1 row2 row 3 etc...get the text and add that to arraylist gets
      * elements in a list and add the elements text to a list. a list of strings
      */
-    public ArrayList<String> returnColumnData(List<WebElement> element) {
+    public static void returnColumnData(List<WebElement> element) {
         ArrayList<String> listColumnData = new ArrayList<>();
         for (WebElement s : element) {
 
             listColumnData.add(s.getText());
         }
-        return listColumnData;
+        System.out.println(listColumnData);}
+
+    public static void captureScreenshot(WebDriver driver) throws IOException {
+
+        String baseDirectory = "E:\\Medeva Automation WorkSpace\\Screenshots\\";
+        String folderName = baseDirectory + "Screenshot_" + System.currentTimeMillis() + "\\";
+        File directory = new File(folderName);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String path = "E:\\Medeva Automation WorkSpace\\Screenshots\\Screenshot";
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenshot, new File(folderName+"Screenshot"+System.currentTimeMillis()+".png"));
     }
 
     public static void takeScreenShot() {
@@ -225,8 +242,7 @@ public class Helper {
                     "src/test/screenshot" + "/" + folderDate;//directory where screenshots live
 
             new File(directoryForScreenshots).mkdirs();//makes new directory if does not exist
-            File myFile = new File(directoryForScreenshots,
-                    fileName);//creates file in a directory n specified name
+            File myFile = new File(directoryForScreenshots, fileName);//creates file in a directory n specified name
 
             while (myFile.exists())//if file name exists increment name with +1
             {
@@ -234,8 +250,7 @@ public class Helper {
                 myFile = new File(directoryForScreenshots, fileName);
             }
 
-            FileOutputStream out = new FileOutputStream(
-                    myFile);//creates an output for the created file
+            FileOutputStream out = new FileOutputStream(myFile);//creates an output for the created file
             out.write(((TakesScreenshot) driver).getScreenshotAs(
                     OutputType.BYTES));//Takes screenshot and writes the screenshot data to the created file
             out.close(); //closes the outputstream for the file
