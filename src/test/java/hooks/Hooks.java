@@ -8,6 +8,7 @@ import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -26,7 +27,6 @@ public class Hooks {
         webDriverFactory = new WebDriverFactory();
         webDriverFactory.init_driver(FileReaderManager.getInstance().getConfigReader().getBrowser());
     }
-
     @After
     public void quitBrowser() {
         WebDriverFactory.getDriver().quit();

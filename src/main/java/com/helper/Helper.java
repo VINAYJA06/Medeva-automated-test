@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -24,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import static org.hamcrest.CoreMatchers.containsString;
 
 /*import java.awt.AWTException;
@@ -56,65 +56,114 @@ import org.openqa.selenium.support.ui.WebDriverWait;*/
 public class Helper {
 
     private static final int T_SLEEP_ROBOT_TY = 200;
-
     private static final String ASC = "Asc";
-
     private static final String DESC = "Desc";
-
     private static final String DATE_PATTERN = "dd-MM-yyyy";
-
     private static final String LAST_DATE = "12-12-3000";
-
     private static final String FIRST_DATE = "00-00-0000";
-
     public Duration waitInSecs = Duration.ofSeconds(15);
-
     public Duration waitInMilliSecs = Duration.ofMillis(100);
-
     private static WebDriver driver;
-
     private int sleepShort = 2500;
-
     private int sleepMedium = 5000;
-
     private int sleepDlLong = 10000;
+    private JavascriptExecutor javaScriptExecutor;
+    private WebDriver webDriver = null;
+    private static WebDriverWait wait = null;
+    private static final String CLICK_ON_ELEMENT = "arguments[0].click();";
+    private static final String SCROLL_TO_ELEMENT = "arguments[0].scrollIntoView();";
+    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public Helper(WebDriver driver) {
-        this.driver = driver;
+    public Helper(WebDriver driver, String className) {
+        this.webDriver = driver;
+        javaScriptExecutor = (JavascriptExecutor) driver;
+        wait = (WebDriverWait) new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100)).ignoring(StaleElementReferenceException.class);
     }
 
     public Helper() {
     }
 
-    public static void clickOnElement(WebElement webElement) {
+    public static void clickOnElement(WebElement element) {
+        isElementPresent(wait, element);
         try {
-            webElement.click();
+            element.click();
         } catch (ElementClickInterceptedException ecie) {
             try {
-                System.out.println("Try click on button again");
-                webElement.click();
+                element.click();
             } catch (ElementClickInterceptedException ece) {
-                System.out.println("Try Enter on button");
-                webElement.sendKeys(Keys.ENTER);
+                element.sendKeys(Keys.ENTER);
             }
-
             ecie.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void dragAndDrop(WebElement from, WebElement to){
+    public static String getTextOfElement(WebElement element) {
+        Helper.Logger("Text of the {}");
+        return wait.until(ExpectedConditions.visibilityOf(element)).getText();
+    }
 
+    public void scrollToElement(WebElement element) {
+        javaScriptExecutor.executeScript(SCROLL_TO_ELEMENT, element);
+
+    }
+
+//    public static WebElement waitForElement(WebDriverWait waits,WebElement element) {
+////        return wait.until(ExpectedConditions.visibilityOf(elementToWaitFor));
+//        try {
+//            waits.until(ExpectedConditions.visibilityOf(element));
+//        } catch (NoSuchElementException | TimeoutException ignored) {
+//            System.out.println("Element not found");
+//            Assert.fail();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return element;
+//    }
+
+    public static void isElementPresent(WebDriverWait wait, WebElement element) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (NoSuchElementException | TimeoutException ignored) {
+            System.out.println("Element not found");
+            Assert.fail();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendKeysToElement(WebElement element, String keyToSend) {
+        isElementPresent(wait, element);
+        element.clear();
+        element.sendKeys(keyToSend);
+    }
+
+//    public static void sendKeysToElement(WebElement element, String textToSend) {
+//        waitForElement(wait,element).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+//        waitForElement(wait,element).sendKeys(Keys.BACK_SPACE);
+//        wait.until((ExpectedCondition<Boolean>) waitForEmptyField -> element.getAttribute("value").equalsIgnoreCase(""));
+//        waitForElement(wait,element).sendKeys(textToSend);
+//        log.info("Sent text: {} to field", textToSend);
+//    }
+
+    public static void sleep(int timeToSleep) {
+        try {
+            Thread.sleep(timeToSleep);
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
+    }
+
+    public void dragAndDrop(WebElement from, WebElement to){
         Actions act=new Actions(driver);
-        //Dragged and dropped.
         act.dragAndDrop(from, to).build().perform();
     }
+
     public static String getLocalTime() {
         Calendar calder = Calendar.getInstance();
         System.out.println(calder.getTime());
         return calder.getTime().toString();
-
     }
 
     public String replaceNull(String input) {
@@ -147,11 +196,6 @@ public class Helper {
         }
     }
 
-    /**
-     * @param expected string used in a search,
-     * @param actual   the returned string from a table Check that the expected string is contained
-     *                 in the actual data returned
-     */
     public void assertStringContains(String expected, String actual) {
         try {
             System.out.println("\nExpected:\t" + expected + "\nActual:\t\t" + actual);
@@ -168,12 +212,9 @@ public class Helper {
 
         for (int i = 0; i < validations[0].length; i++) {
             try {
-                System.out.println(
-                        "\nExpected:\t" + validations[0][i] + "\nActual:\t\t" + validations[1][i]);
-
+                System.out.println("\nExpected:\t" + validations[0][i] + "\nActual:\t\t" + validations[1][i]);
                 matched.add(validations[0][i].equals(validations[1][i]));
                 Assert.assertEquals(validations[0][i], validations[1][i]);
-
                 System.out.println("Matched!");
             } catch (AssertionError ae) {
                 System.out.println("Assertion error has occurred: " + ae);
@@ -188,42 +229,25 @@ public class Helper {
         }
     }
 
-    public static void isElementPresent(WebDriverWait waits, WebElement element) {
-        try {
-            waits.until(ExpectedConditions.visibilityOf(element));
-            System.out.println(element.getText());
-        } catch (NoSuchElementException | TimeoutException ignored) {
-            System.out.println("Element not found");
-            Assert.fail();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * pass a list of column data. row1 row2 row 3 etc...get the text and add that to arraylist gets
-     * elements in a list and add the elements text to a list. a list of strings
-     */
     public static void returnColumnData(List<WebElement> element) {
         ArrayList<String> listColumnData = new ArrayList<>();
         for (WebElement s : element) {
-
             listColumnData.add(s.getText());
         }
-        System.out.println(listColumnData);}
+        System.out.println(listColumnData);
+    }
 
     public static void captureScreenshot(WebDriver driver) throws IOException {
+        try {
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            String path = "E:\\Medeva Automation WorkSpace\\Screenshots\\";
 
-        String baseDirectory = "E:\\Medeva Automation WorkSpace\\Screenshots\\";
-        String folderName = baseDirectory + "Screenshot_" + System.currentTimeMillis() + "\\";
-        File directory = new File(folderName);
-        if (!directory.exists()) {
-            directory.mkdirs();
+            File destinationPath = new File(path + "SS" + System.currentTimeMillis() + ".png");
+            FileUtils.copyFile(screenshot, destinationPath);
+            System.out.println("Screenshot Taken");
+        } catch (Exception e) {
+            System.out.println("screenshot error\n " + e);
         }
-
-        String path = "E:\\Medeva Automation WorkSpace\\Screenshots\\Screenshot";
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File(folderName+"Screenshot"+System.currentTimeMillis()+".png"));
     }
 
     public static void takeScreenShot() {
@@ -234,27 +258,20 @@ public class Helper {
 
             int num = 0;
             String ext = ".png";
-            String fileName;//= "SS" + NAME.getMethodName() + ext; //name of file/s you wish to create
+            String fileName;
             String directoryForScreenshots;
-
             fileName = "SS" + "testName"/*NAME.getMethodName()*/ + ext;
-            directoryForScreenshots =
-                    "src/test/screenshot" + "/" + folderDate;//directory where screenshots live
-
-            new File(directoryForScreenshots).mkdirs();//makes new directory if does not exist
-            File myFile = new File(directoryForScreenshots, fileName);//creates file in a directory n specified name
-
-            while (myFile.exists())//if file name exists increment name with +1
+            directoryForScreenshots = "src/test/screenshot" + "/" + folderDate;
+            new File(directoryForScreenshots).mkdirs();
+            File myFile = new File(directoryForScreenshots, fileName);
+            while (myFile.exists())
             {
                 fileName = "SS" + "testName"/*NAME.getMethodName()*/ + (num++) + ".png";
                 myFile = new File(directoryForScreenshots, fileName);
             }
-
-            FileOutputStream out = new FileOutputStream(myFile);//creates an output for the created file
-            out.write(((TakesScreenshot) driver).getScreenshotAs(
-                    OutputType.BYTES));//Takes screenshot and writes the screenshot data to the created file
-            out.close(); //closes the outputstream for the file
-
+            FileOutputStream out = new FileOutputStream(myFile);
+            out.write(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
+            out.close();
             System.out.println("Screenshot Taken");
         } catch (Exception e) {
             System.out.println("screenshot error\n " + e);
@@ -262,15 +279,9 @@ public class Helper {
     }
 
     public int lastStringIntoArraySplit(String paginatorString) {
-        //String getPaginatorText = element.getText();
         String[] arrayPagSplitTxt = paginatorString.split(" ");
-
-        /*System.out.println("Text with white spaces: " + getText);
-        System.out.println("seperated string into an array" + Arrays.toString(arySplit));*/
-
         int getStringlenght = arrayPagSplitTxt.length - 1;
-        System.out
-                .println("\nNumber of Rows Returned: " + arrayPagSplitTxt[getStringlenght] + "\n");
+        System.out.println("\nNumber of Rows Returned: " + arrayPagSplitTxt[getStringlenght] + "\n");
         return Integer.parseInt(arrayPagSplitTxt[getStringlenght]);
     }
 
@@ -301,12 +312,6 @@ public class Helper {
         return sleepDlLong;
     }
 
-    /**
-     * loops through an array of strings to check the alphabetical order using String.compareTo(x)
-     * we can check the lexagraphical order based on unicode for Asc order compare "" to the 1st
-     * element in the list OR for Desc order compare "zzzz" to the 1st element in the list we then
-     * take the current element in list and make it equal the previous
-     */
     public void compareAlphabeticalOrder(ArrayList<String> list, String order) {
         String ascPrevious = "";
         String descPrevious = "zzzz";

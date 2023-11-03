@@ -5,13 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.IOException;
 import java.time.Duration;
 
 public class LoginPage {
+
+    Helper helper;
     WebDriver driver;
     WebDriverWait wait;
 
@@ -43,45 +43,40 @@ public class LoginPage {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofMillis(100));
         PageFactory.initElements(driver, this);
+        helper = new Helper(driver, this.getClass().getSimpleName());
     }
-    public void EnterValidUsername(String username) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(enterUsername));
-        enterUsername.sendKeys(username);
-        Thread.sleep(3000);
+    public void EnterValidUsername(String username) throws IOException {
+        Helper.sleep(3000);
+        Helper.sendKeysToElement(enterUsername,username);
+        Helper.sleep(3000);
+        Helper.captureScreenshot(driver);
     }
-    public void EnterValidPassword(String username) throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(enterPassword));
-        enterPassword.sendKeys(username);
-        Thread.sleep(3000);
+    public void EnterValidPassword(String password) {
+        Helper.sendKeysToElement(enterPassword,password);
+        Helper.sleep(3000);
 
     }
-    public void ClickTermsCodCheckBox() throws InterruptedException, IOException {
-        wait.until(ExpectedConditions.visibilityOf(checkTermsCon));
+    public void ClickTermsCodCheckBox() {
         Helper.clickOnElement(checkTermsCon);
-        Helper.captureScreenshot(driver);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
-    public void ClickLoginButton() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(clickSignIn));
+    public void ClickLoginButton() {
         Helper.clickOnElement(clickSignIn);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
-    public void SelectLocation() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(selectLocation));
+    public void SelectLocation() {
         Helper.clickOnElement(selectLocation);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
         Helper.clickOnElement(clickGo);
-        Thread.sleep(5000);
+        Helper.sleep(5000);
     }
-    public void ClickUserDropdown() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(logoutUserDropdown));
+    public void ClickUserDropdown() {
         Helper.clickOnElement(logoutUserDropdown);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
-    public void ClickLogoutButton() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(logoutButton));
+    public void ClickLogoutButton() {
         Helper.clickOnElement(logoutButton);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
 
 

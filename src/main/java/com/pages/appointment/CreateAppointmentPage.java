@@ -38,28 +38,27 @@ public class CreateAppointmentPage {
         Helper.isElementPresent(wait, clickAddOrViewPatients);
         Helper.clickOnElement(clickAddOrViewPatients);
         Helper.captureScreenshot(driver);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
     public void SelectPatient(String patientName) throws InterruptedException {
         Helper.isElementPresent(wait, patientNameField);
         Helper.clickOnElement(patientNameField);
-
-        Thread.sleep(3000);
-        patientNameField.sendKeys(patientName);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
+        Helper.sendKeysToElement(patientNameField,patientName);
+        Helper.sleep(3000);
         Helper.clickOnElement(clickPatient);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
     public void EnterVisitID(String visitID) throws InterruptedException {
         Helper.isElementPresent(wait, enterVisitID);
-        enterVisitID.sendKeys(visitID);
-        Thread.sleep(3000);
+        Helper.sendKeysToElement(enterVisitID,visitID);
+        Helper.sleep(3000);
         Helper.clickOnElement(selectConsultType);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
     public void CreateAppointment() throws InterruptedException {
         Helper.isElementPresent(wait, clickConfirm);
         Helper.clickOnElement(clickConfirm);
-        Thread.sleep(3000);
+        Helper.sleep(3000);
     }
 }
